@@ -2,5 +2,6 @@ core.Microsoft*
 core.mongo*
 core.python*
 env.py
+credentials.py
 __pycache__/
 *.py[cod]
