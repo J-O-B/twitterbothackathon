@@ -50,6 +50,12 @@ class StdOutListener(StreamListener):
         mongo.db.tweets.insert_one(tweet_data)
 
 
+@app.route("/", methods=["GET", "POST"])
+def home():
+
+    return render_template("index.html")
+
+
 if __name__ == "__main__":
     auth = OAuthHandler(API_KEY, API_SECRET_KEY)
     auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
