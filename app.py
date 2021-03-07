@@ -15,7 +15,7 @@ if os.path.exists("env.py"):
 app = Flask(__name__)
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
-app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+app.config["MONGO_URI"] = ("mongodb+srv://test:test1988@clustertweet.cfvo1.mongodb.net/theythinkitsallclover?retryWrites=true&w=majority")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
@@ -34,10 +34,13 @@ class StdOutListener(StreamListener):
         time_posted = dt.strptime(text["created_at"],
                                   '%a %b %d %H:%M:%S %z %Y')
         try:
-            coordinates = text["place"]["bounding_box"]["coordinates"]
-            location = coordinates
+            if (text["place"]["bounding_box"]["coordinates"]):
+                coordinates = text["place"]["bounding_box"]["coordinates"]
+                location = coordinates[0][0]
+            else:
+                location = text["user"]["location"]
         except:
-            location = text["user"]["location"]
+            location = "No Location"
         tweet_data = {
                 "content": content,
                 "username": username,
